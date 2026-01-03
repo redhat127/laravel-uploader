@@ -6,6 +6,7 @@ export interface Upload {
   file_size: number;
   file_size_human: string;
   download_url: string;
+  delete_url: string;
   created_at: string;
   created_at_human: string;
 }

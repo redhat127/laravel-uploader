@@ -13,4 +13,5 @@ Route::prefix('upload')
         Route::post('/chunk', 'chunk')->name('chunk');
         Route::post('/abort', 'abort')->name('abort');
         Route::get('/{upload}/download', 'download')->name('download');
+        Route::delete('/{upload}', 'destroy')->name('destroy');
     });

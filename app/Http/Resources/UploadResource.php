@@ -21,6 +21,7 @@ class UploadResource extends JsonResource
             'file_size' => $this->file_size,
             'file_size_human' => $this->file_size_human,
             'download_url' => $this->getDownloadUrl(),
+            'delete_url' => $this->getDeleteUrl(),
             'created_at' => $this->created_at->toIso8601String(),
             'created_at_human' => $this->created_at->diffForHumans(),
         ];
@@ -34,5 +35,10 @@ class UploadResource extends JsonResource
     private function getDownloadUrl(): string
     {
         return route('upload.download', ['upload' => $this->id]);
+    }
+
+    private function getDeleteUrl(): string
+    {
+        return route('upload.destroy', ['upload' => $this->id]);
     }
 }

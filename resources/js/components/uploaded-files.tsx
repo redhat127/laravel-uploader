@@ -1,6 +1,8 @@
 // components/uploaded-files.tsx
 import { Upload } from '@/types/upload';
-import { Download } from 'lucide-react';
+import { router } from '@inertiajs/react';
+import { Download, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
 import { FilePreview } from './file-preview';
 import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
@@ -10,6 +12,21 @@ interface UploadedFilesProps {
 }
 
 export const UploadedFiles = ({ uploads }: UploadedFilesProps) => {
+  const handleDelete = (upload: Upload) => {
+    if (confirm('Are you sure you want to delete this file?')) {
+      router.delete(upload.delete_url, {
+        preserveScroll: true,
+        preserveState: 'errors',
+        onSuccess: () => {
+          toast.success('File deleted successfully');
+        },
+        onError: () => {
+          toast.error('Failed to delete file');
+        },
+      });
+    }
+  };
+
   if (uploads.length === 0) {
     return null;
   }
@@ -39,12 +56,21 @@ export const UploadedFiles = ({ uploads }: UploadedFilesProps) => {
                   </div>
                 </div>
 
-                <Button asChild variant="outline" size="sm" className="shrink-0">
-                  <a href={upload.download_url}>
-                    <Download className="h-4 w-4" />
-                    Download
-                  </a>
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button asChild variant="outline" size="sm" className="shrink-0">
+                    <a href={upload.download_url}>
+                      <Download className="h-4 w-4" />
+                    </a>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="shrink-0 text-destructive hover:bg-destructive/10"
+                    onClick={() => handleDelete(upload)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
             ))}
           </div>

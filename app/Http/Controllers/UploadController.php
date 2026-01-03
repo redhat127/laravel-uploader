@@ -174,4 +174,12 @@ class UploadController extends Controller
             'Content-Type' => $upload->mime_type ?? 'application/octet-stream',
         ]);
     }
+
+    public function destroy(Upload $upload)
+    {
+        Storage::delete($upload->file_path);
+        $upload->delete();
+
+        return back();
+    }
 }
