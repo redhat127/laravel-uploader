@@ -20,8 +20,8 @@ export default function Home({ uploads: { data: uploads } }: { uploads: { data: 
       <Head>
         <title>Laravel Uploader</title>
       </Head>
-      <main className="flex min-h-screen items-center justify-center p-4 px-8">
-        <div className="my-8 w-full space-y-4">
+      <main className="flex min-h-screen items-center justify-center p-4 sm:px-6 lg:px-8">
+        <div className="my-4 w-full space-y-4 sm:my-8">
           <Uploader />
           <UploadedFiles uploads={uploads} />
           <Toaster expand closeButton position="top-center" duration={5000} />

@@ -47,9 +47,9 @@ export const Uploader = () => {
   }, [selectedFiles, sendFile]);
 
   return (
-    <div className="mx-auto w-full max-w-2xl space-y-6 text-primary">
+    <div className="mx-auto w-full max-w-4xl space-y-4 text-primary sm:space-y-6">
       <Card className="p-0">
-        <CardContent className="p-4">
+        <CardContent className="p-4 sm:p-6">
           <UploadDropzone
             isDragging={isDragging}
             onClick={openFileDialog}

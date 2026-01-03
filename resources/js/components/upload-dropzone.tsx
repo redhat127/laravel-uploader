@@ -20,14 +20,14 @@ export const UploadDropzone = ({ isDragging, onClick, onDragEnter, onDragOver, o
       onDrop={onDrop}
       onClick={onClick}
       className={cn(
-        'group flex h-48 cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-dashed transition-colors *:pointer-events-none hover:border-primary',
+        'group flex h-32 cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-dashed transition-colors *:pointer-events-none hover:border-primary sm:h-48',
         { 'border-blue-600 bg-blue-950/50': isDragging },
       )}
     >
-      <h1 className="font-medium">Upload Files</h1>
-      <p className="text-sm text-muted-foreground transition-colors group-hover:text-primary">Select or Drag Files Here</p>
+      <h1 className="text-sm font-medium sm:text-base">Upload Files</h1>
+      <p className="text-xs text-muted-foreground transition-colors group-hover:text-primary sm:text-sm">Select or Drag Files Here</p>
       <UploadCloudIcon
-        className={cn('-order-1 size-8 transition-all group-hover:-translate-y-1 group-hover:text-sky-500', {
+        className={cn('-order-1 size-6 transition-all group-hover:-translate-y-1 group-hover:text-sky-500 sm:size-8', {
           '-translate-y-1 text-sky-500': isDragging,
         })}
       />

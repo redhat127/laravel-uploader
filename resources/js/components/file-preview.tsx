@@ -49,7 +49,7 @@ export const FilePreview = ({ file, mimeType, filePath }: FilePreviewProps) => {
     }
   };
 
-  return <div className="h-16 w-16 min-w-16 rounded-md border p-1">{getPreviewContent()}</div>;
+  return <div className="h-12 w-12 min-w-12 rounded-md border p-1 sm:h-16 sm:w-16 sm:min-w-16">{getPreviewContent()}</div>;
 };
 
 // Helper function to work with mime type strings

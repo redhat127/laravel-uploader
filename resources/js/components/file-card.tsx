@@ -41,15 +41,17 @@ export const FileCard = ({ selectedFile, uploadProgress, uploadStats, onRemove, 
   const timeRemaining = uploadStats ? formatTimeRemaining(uploadStats.bytesUploaded, selectedFile.file.size, uploadStats.speed) : null;
 
   return (
-    <div className="flex items-center gap-4 rounded-md border p-4">
+    <div className="flex flex-col gap-3 rounded-md border p-4 sm:flex-row sm:items-start">
       <div className="flex min-w-0 flex-1 items-start gap-3">
         <FilePreview file={selectedFile.file} />
-        <div className="mt-2 w-full min-w-0 space-y-1">
+        <div className="mt-1 w-full min-w-0 space-y-1">
           <h2 className="truncate text-sm font-medium">{selectedFile.file.name}</h2>
-          <p className="text-xs text-muted-foreground">
-            {uploadedSize} / {totalSize}
-            {speed && <span className="ml-2 text-blue-400">{speed}</span>}
-            {timeRemaining && <span className="ml-2 text-muted-foreground">{timeRemaining}</span>}
+          <p className="flex flex-wrap gap-x-2 gap-y-1 text-xs text-muted-foreground">
+            <span>
+              {uploadedSize} / {totalSize}
+            </span>
+            {speed && <span className="text-blue-400">{speed}</span>}
+            {timeRemaining && <span>{timeRemaining}</span>}
           </p>
 
           {selectedFile.status === 'uploading' && (
@@ -84,18 +86,18 @@ export const FileCard = ({ selectedFile, uploadProgress, uploadStats, onRemove, 
         </div>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 sm:self-center">
         {isPausable && (
-          <Button variant="outline" size="icon-sm" onClick={onPause}>
+          <Button variant="outline" size="icon-sm" onClick={onPause} aria-label="Pause">
             <Pause className="size-4" />
           </Button>
         )}
         {isResumable && (
-          <Button variant="outline" size="icon-sm" onClick={onResume}>
+          <Button variant="outline" size="icon-sm" onClick={onResume} aria-label="Resume">
             <Play className="size-4" />
           </Button>
         )}
-        <Button variant="outline" size="icon-sm" onClick={onRemove}>
+        <Button variant="outline" size="icon-sm" onClick={onRemove} aria-label="Remove">
           <X className="size-4" />
         </Button>
       </div>
