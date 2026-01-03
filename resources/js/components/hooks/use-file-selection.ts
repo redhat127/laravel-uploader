@@ -1,7 +1,7 @@
 import UploadController from '@/actions/App/Http/Controllers/UploadController';
 import { clearFileInputValue } from '@/lib/utils/file';
 import { SelectedFile, SelectedFileStatus, UploadStats } from '@/types/file';
-import { usePage } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import axios from 'axios';
 import { nanoid } from 'nanoid';
 import { ChangeEvent, useRef, useState } from 'react';
@@ -110,6 +110,7 @@ export function useFileSelection() {
             return newStats;
           });
           toast.success(`${file.name} uploaded successfully!`);
+          router.reload({ only: ['uploads'] });
           return res.data.filePath;
         }
 

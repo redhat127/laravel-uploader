@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Upload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -80,14 +81,23 @@ class UploadController extends Controller
 
         // Check if upload complete
         if ($metadataFile['expectedNextChunk'] === $totalChunks) {
+            $finalFileSize = filesize($fullPath);
+            $mimeType = mime_content_type($fullPath);
+
+            // Save to database - only essentials
+            $upload = Upload::create([
+                'file_path' => $filePath,
+                'mime_type' => $mimeType,
+                'file_size' => $finalFileSize,
+            ]);
+
             Storage::delete($metadataPath);
 
             return response()->json([
                 'message' => 'success',
                 'completed' => true,
                 'filePath' => $filePath,
-                'originalName' => $originalName,
-                'normalizedName' => $normalizedName,
+                'upload' => $upload,
             ]);
         }
 
@@ -148,5 +158,20 @@ class UploadController extends Controller
         }
 
         return response()->json(['message' => 'Upload aborted and cleaned up']);
+    }
+
+    public function download(Upload $upload)
+    {
+        $filePath = Storage::path($upload->file_path);
+
+        if (! file_exists($filePath)) {
+            abort(404, 'File not found');
+        }
+
+        $fileName = basename($upload->file_path);
+
+        return response()->download($filePath, $fileName, [
+            'Content-Type' => $upload->mime_type ?? 'application/octet-stream',
+        ]);
     }
 }
